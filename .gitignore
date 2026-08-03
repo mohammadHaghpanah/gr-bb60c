@@ -1,0 +1,40 @@
+# Prerequisites / build artifacts
+build/
+install/
+lib_runtime/
+py_overlay/
+compile_commands.json
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.so
+*.so.*
+*.a
+*.o
+*.lo
+*.la
+*.pyc
+__pycache__/
+*.egg-info/
+.eggs/
+dist/
+*.user
+*.autosave
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*~
+.clangd/
+.cache/
+
+# Debug / local logs
+debug-*.log
+*.log
+/tmp/
+
+# OS
+.DS_Store
+Thumbs.db

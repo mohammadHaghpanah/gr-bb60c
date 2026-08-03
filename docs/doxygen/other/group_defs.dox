@@ -1,0 +1,6 @@
+/*!
+ * \defgroup block GNU Radio BB60C C++ Signal Processing Blocks
+ * \brief All C++ blocks that can be used from the BB60C GNU Radio
+ *        module are listed here or in the subcategories below.
+ *
+ */

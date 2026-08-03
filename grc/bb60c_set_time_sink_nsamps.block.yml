@@ -1,0 +1,31 @@
+id: bb60c_set_time_sink_nsamps
+label: BB60C Set Time Sink Nsamps
+category: '[bb60c]'
+
+templates:
+  imports: from gnuradio import blocks
+  # dtype string inserts quotes around ${time_sink}, so use getattr(...)
+  make: blocks.msg_pair_to_var(getattr(self, ${time_sink}).set_nsamps)
+
+parameters:
+- id: time_sink
+  label: Time Sink Block ID
+  dtype: string
+  default: qtgui_time_sink_x_0
+
+inputs:
+- domain: message
+  id: inpair
+
+documentation: |-
+  Calls QT GUI Time Sink set_nsamps(N) from BB60C Sweep num_points messages.
+
+  Wiring:
+    BB60C Sweep: out        -> QT GUI Time Sink
+    BB60C Sweep: num_points -> this block
+  Time Sink Block ID = sink ID without quotes, e.g. qtgui_time_sink_x_0
+
+  Time Sink: Trigger Mode=Tag, Tag Key=sweep_start.
+  Initial Number of Points can be 1024; it updates when the first message arrives.
+
+file_format: 1

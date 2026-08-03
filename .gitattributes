@@ -1,0 +1,10 @@
+# Auto-detect text files and normalize line endings
+* text=auto
+
+# Keep shell scripts with LF
+*.sh text eol=lf
+
+# Binary / generated bindings helpers
+*.so binary
+*.o binary
+*.a binary

@@ -1,0 +1,120 @@
+id: bb60c_bb60c_sweep
+label: BB60C Sweep
+category: '[bb60c]'
+
+templates:
+  imports: from gnuradio import bb60c
+  make: bb60c.bb60c_sweep(${ref_level}, ${start_freq}, ${stop_freq}, ${rbw}, ${vbw}, ${sweep_time}, ${rbw_shape}, ${rejection}, ${detector}, ${scale}, ${units}, ${buffer_capacity})
+  callbacks:
+  - self.set_ref_level(${ref_level})
+  - self.set_start_freq(${start_freq})
+  - self.set_stop_freq(${stop_freq})
+  - self.set_rbw(${rbw})
+  - self.set_vbw(${vbw})
+  - self.set_sweep_time(${sweep_time})
+  - self.set_rbw_shape(${rbw_shape})
+  - self.set_rejection(${rejection})
+  - self.set_detector(${detector})
+  - self.set_scale(${scale})
+  - self.set_units(${units})
+
+parameters:
+- id: ref_level
+  label: Ref Level (dBm)
+  dtype: real
+  default: '-20.0'
+- id: start_freq
+  label: Start Freq (Hz)
+  dtype: real
+  default: 100e6
+- id: stop_freq
+  label: Stop Freq (Hz)
+  dtype: real
+  default: 900e6
+- id: rbw
+  label: RBW (Hz)
+  dtype: real
+  default: 10e3
+- id: vbw
+  label: VBW (Hz)
+  dtype: real
+  default: 10e3
+- id: sweep_time
+  label: Sweep Time (s)
+  dtype: real
+  default: '0.001'
+- id: rbw_shape
+  label: RBW Shape
+  dtype: int
+  default: '1'
+  options: [0, 1, 2]
+  option_labels: [Nuttall, Flattop, CISPR]
+- id: rejection
+  label: Spur Rejection
+  dtype: int
+  default: '0'
+  options: [0, 1]
+  option_labels: ['No Spur Reject', 'Spur Reject']
+- id: detector
+  label: Detector
+  dtype: int
+  default: '1'
+  options: [0, 1]
+  option_labels: ['Min and Max', Average]
+- id: scale
+  label: Scale
+  dtype: int
+  default: '0'
+  options: [0, 1, 2, 3]
+  option_labels: [Log, Linear, 'Log Full Scale', 'Linear Full Scale']
+- id: units
+  label: Units
+  dtype: int
+  default: '0'
+  options: [0, 1, 2, 3]
+  option_labels: ['Log (dBm)', Voltage, Power, Sample]
+- id: buffer_capacity
+  label: Circular Buffer Capacity (sweeps)
+  dtype: int
+  default: '32'
+
+outputs:
+- label: out
+  domain: stream
+  dtype: float
+
+- label: num_points_int
+  domain: stream
+  dtype: int
+  optional: true
+
+- label: num_points
+  domain: message
+  optional: true
+
+- label: meta
+  domain: message
+  optional: true
+
+documentation: |-
+  Outputs:
+    - out (float): successive sweep bins
+    - num_points_int (int stream, optional): continuous bins/sweep value
+    - num_points (message): (num_points . N) every sweep — use with
+      "BB60C Set Time Sink Nsamps" to update QT GUI Time Sink
+    - meta (message): dict with sweep_size, bin_size, start_freq
+
+  Correct Time Sink display:
+    out -> QT GUI Time Sink (Trigger=Tag, Tag Key=sweep_start)
+    num_points -> BB60C Set Time Sink Nsamps
+      (Time Sink Block ID = your sink id, e.g. qtgui_time_sink_x_0)
+
+  Runtime control:
+    Wire parameters to QT GUI Range / Chooser variables. Callbacks call
+    set_* on the block and reconfigure the BB60C while running.
+    buffer_capacity is construction-only (no runtime callback).
+
+  Note: plain Variable / Message Pair to Var cannot update Time Sink
+  Num Points (GRC Time Sink has no set_nsamps callback).
+
+file_format: 1

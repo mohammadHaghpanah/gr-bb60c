@@ -1,0 +1,13 @@
+# gr-bb60c
+
+GNU Radio Out-Of-Tree module for the Signal Hound BB60C spectrum analyzer.
+
+Import:
+
+```python
+from gnuradio import bb60c
+```
+
+Main block: `bb60c.bb60c_sweep` — continuous spectrum sweep source.
+
+See the root [README.md](../README.md) and Doxygen docs for details.
